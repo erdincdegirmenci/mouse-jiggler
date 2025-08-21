@@ -1,5 +1,9 @@
-﻿using System.Windows;
+﻿using System.Drawing;
+using System.IO;
+using System.Reflection;
+using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Media.Imaging;
 
 
 namespace MouseJiggler
@@ -13,9 +17,13 @@ namespace MouseJiggler
         private MouseJigglers jiggler;
         private NotifyIcon  notifyIcon;
 
+
+        private readonly string iconPath = Path.Combine(AppContext.BaseDirectory, "Resources", "mousejiggler.ico");
+
         public MainWindow()
         {
             InitializeComponent();
+            this.Icon = new BitmapImage(new Uri(iconPath, UriKind.Absolute));
             jiggler = new MouseJigglers();
         }
 
@@ -46,7 +54,7 @@ namespace MouseJiggler
             if (notifyIcon == null)
             {
                 notifyIcon = new NotifyIcon();
-                notifyIcon.Icon = new System.Drawing.Icon("Resources\\mousejiggler.ico");
+                notifyIcon.Icon = new Icon(iconPath);
 
                 notifyIcon.Visible = true;
                 notifyIcon.Text = "Mouse Jiggler";
