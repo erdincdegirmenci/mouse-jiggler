@@ -11,7 +11,7 @@ namespace MouseJiggler
     public partial class MainWindow : Window
     {
         private MouseJigglers jiggler;
-        private NotifyIcon  trayIcon;
+        private NotifyIcon  notifyIcon;
 
         public MainWindow()
         {
@@ -23,14 +23,14 @@ namespace MouseJiggler
         {
             if (int.TryParse(IntervalBox.Text, out int interval))
             {
-                if (interval < 5000)
+                if (interval < 1)
                 {
-                    System.Windows.MessageBox.Show("Minimum interval is 5000 ms. Setting to 5000.");
-                    interval = 5000;
+                    System.Windows.MessageBox.Show("Minimum interval is 1 minute. Setting to 1 minute.");
+                    interval = 1;
                     IntervalBox.Text = interval.ToString();
                 }
-
-                jiggler = new MouseJigglers(interval);
+                int intervalMs = interval * 60000;
+                jiggler = new MouseJigglers(intervalMs);
                 jiggler.Start();
             }
             else
@@ -43,42 +43,36 @@ namespace MouseJiggler
 
         private void EnableTray_Click(object sender, RoutedEventArgs e)
         {
-            if (trayIcon == null)
+            if (notifyIcon == null)
             {
-                // Tray icon oluştur
-                trayIcon = new NotifyIcon();
-                trayIcon.Icon = System.Drawing.SystemIcons.Application;
+                notifyIcon = new NotifyIcon();
+                notifyIcon.Icon = new System.Drawing.Icon("Resources\\mousejiggler.ico");
 
-                trayIcon.Visible = true;
-                trayIcon.Text = "Mouse Jiggler";
+                notifyIcon.Visible = true;
+                notifyIcon.Text = "Mouse Jiggler";
 
-                // Çift tıklama ile pencereyi geri getir
-                trayIcon.DoubleClick += (s, args) =>
+                notifyIcon.DoubleClick += (s, args) =>
                 {
                     this.Show();
                     this.WindowState = WindowState.Normal;
                     this.ShowInTaskbar = true;
 
-                    // Tray icon'u kaldır
-                    trayIcon.Visible = false;
-                    trayIcon.Dispose();
-                    trayIcon = null;
+                    notifyIcon.Visible = false;
+                    notifyIcon.Dispose();
+                    notifyIcon = null;
                 };
 
-                // Pencereyi gizle
                 this.Hide();
             }
             else
             {
-                // Pencereyi göster
                 this.Show();
                 this.WindowState = WindowState.Normal;
                 this.ShowInTaskbar = true;
 
-                // Tray icon'u kaldır
-                trayIcon.Visible = false;
-                trayIcon.Dispose();
-                trayIcon = null;
+                notifyIcon.Visible = false;
+                notifyIcon.Dispose();
+                notifyIcon = null;
             }
         }
 
@@ -86,8 +80,9 @@ namespace MouseJiggler
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = true;
-            this.Hide();
+            notifyIcon?.Dispose();
             base.OnClosing(e);
+            System.Windows.Application.Current.Shutdown();
         }
     }
 }

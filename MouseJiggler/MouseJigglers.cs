@@ -22,9 +22,9 @@ namespace MouseJiggler
         private bool running = false;
         private int interval;
 
-        public MouseJigglers(int intervalMs = 5000)
+        public MouseJigglers(int intervalMinute = 1)
         {
-            interval = intervalMs;
+            interval = intervalMinute;
         }
 
         public void Start()
