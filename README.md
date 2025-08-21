@@ -4,7 +4,7 @@ Mouse Jiggler is a simple Windows application that prevents the computer from go
 
 ## Screenshot
 
-![Mouse Jiggler]<img width="286" height="189" alt="image" src="https://github.com/user-attachments/assets/837a290b-a4f6-4adc-b575-684288260afd" />
+<img width="286" height="189" alt="image" src="https://github.com/user-attachments/assets/837a290b-a4f6-4adc-b575-684288260afd" />
 
 ## Features
 
