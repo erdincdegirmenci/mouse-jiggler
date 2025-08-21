@@ -16,6 +16,13 @@ namespace MouseJiggler
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool GetCursorPos(out POINT lpPoint);
 
+        [DllImport("kernel32.dll")]
+        static extern uint SetThreadExecutionState(uint esFlags);
+
+        private const uint ES_CONTINUOUS = 0x80000000;
+        private const uint ES_SYSTEM_REQUIRED = 0x00000001;
+        private const uint ES_DISPLAY_REQUIRED = 0x00000002;
+
         public struct POINT { public int X; public int Y; }
 
         private Thread jiggleThread;
@@ -31,6 +38,9 @@ namespace MouseJiggler
         {
             if (running) return;
             running = true;
+
+            SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_DISPLAY_REQUIRED);
+
             jiggleThread = new Thread(JiggleLoop) { IsBackground = true };
             jiggleThread.Start();
         }
@@ -38,6 +48,7 @@ namespace MouseJiggler
         public void Stop()
         {
             running = false;
+            SetThreadExecutionState(ES_CONTINUOUS);
         }
 
         private void JiggleLoop()
