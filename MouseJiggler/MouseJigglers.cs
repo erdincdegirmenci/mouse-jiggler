@@ -46,7 +46,7 @@ namespace MouseJiggler
             {
                 GetCursorPos(out POINT p);
                 SetCursorPos(p.X + 1, p.Y);
-                Thread.Sleep(interval);
+                Thread.Sleep(100);
                 SetCursorPos(p.X, p.Y);
                 Thread.Sleep(interval);
             }

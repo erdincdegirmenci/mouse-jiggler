@@ -37,8 +37,8 @@ namespace MouseJiggler
                     interval = 1;
                     IntervalBox.Text = interval.ToString();
                 }
-                int intervalMs = interval * 60000;
-                jiggler = new MouseJigglers(intervalMs);
+                jiggler.Stop();
+                jiggler = new MouseJigglers(interval * 60000);
                 jiggler.Start();
             }
             else
