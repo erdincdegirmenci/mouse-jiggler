@@ -2,6 +2,9 @@
 
 Mouse Jiggler is a simple Windows application that prevents the computer from going into sleep mode by slightly moving the mouse cursor at specified intervals.
 
+# Download 
+https://github.com/erdincdegirmenci/mouse-jiggler/releases/tag/v1.0.0
+
 ## Screenshot
 
 <img width="286" height="189" alt="image" src="https://github.com/user-attachments/assets/837a290b-a4f6-4adc-b575-684288260afd" />
